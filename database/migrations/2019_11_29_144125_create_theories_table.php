@@ -14,9 +14,9 @@ class CreateTheoriesTable extends Migration
     public function up()
     {
         Schema::create('theories', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('content');
-            $table->unsignedBigInteger('video_id');
+            $table->unsignedInteger('video_id');
             $table->foreign('video_id')->references('id')->on('videos');
             $table->timestamps();
         });

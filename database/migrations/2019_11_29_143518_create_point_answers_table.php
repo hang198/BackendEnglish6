@@ -14,10 +14,10 @@ class CreatePointAnswersTable extends Migration
     public function up()
     {
         Schema::create('point_answers', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('point_id');
+            $table->increments('id');
+            $table->unsignedInteger('point_id');
             $table->foreign('point_id')->references('id')->on('points');
-            $table->unsignedBigInteger('answer_id');
+            $table->unsignedInteger('answer_id');
             $table->foreign('answer_id')->references('id')->on('answers');
             $table->tinyInteger('selected');
             $table->timestamps();

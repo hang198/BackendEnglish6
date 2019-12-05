@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        $credentials = $request->only(['name', 'password']);
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'Tài khoản hoặc mật khẩu không chính xác!'], 401);
@@ -40,13 +40,12 @@ class UserController extends Controller
     {
         $data = [
             'name' => $request->name,
-            'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_id' => 2];
         $user = $user->create($data);
         $role = $user->role;
         $role->permissions;
-        $token = JWTAuth::attempt($request->only(['email', 'password']));
+        $token = JWTAuth::attempt($request->only(['name', 'password']));
         return response()->json(['token' => $token, 'role' => $role]);
     }
 

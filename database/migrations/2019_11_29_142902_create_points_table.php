@@ -14,10 +14,10 @@ class CreatePointsTable extends Migration
     public function up()
     {
         Schema::create('points', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('point');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('practice_id');
+            $table->increments('id');
+            $table->integer('point');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('practice_id');
             $table->foreign('practice_id')->references('id')->on('practices');
             $table->timestamps();
         });

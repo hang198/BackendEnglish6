@@ -27,7 +27,6 @@ class RegisterFormRequest extends FormRequest
         return [
 
             'name' => 'required',
-            'email' => 'required|email|min:6|unique:users,email',
             'password' => 'required|min:6',
             'passwordConfirm' => 'required|same:password'
         ];
@@ -36,11 +35,8 @@ class RegisterFormRequest extends FormRequest
     {
         $messages = [
             'name.required' => '* vui lòng nhập tên! ',
-            'email.required' => '* vui lòng nhập email' ,
             'password.required' => ' * vui lòng nhập mật khẩu ',
             'passwordConfirm.required' => ' * vui lòng nhập lại mật khẩu',
-            'email.email' => '* email không hợp lệ ',
-            'email.unique' => '* email đã tồn tại ',
             'password.min' => '* mật khẩu tối thiểu  6 ký tự ',
             'passwordConfirm.same' => '* mật khẩu không khớp',
         ];

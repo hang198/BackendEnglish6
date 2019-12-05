@@ -14,10 +14,10 @@ class CreatePracticeQuestionsTable extends Migration
     public function up()
     {
         Schema::create('practice_questions', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('practice_id');
+            $table->increments('id');
+            $table->unsignedInteger('practice_id');
             $table->foreign('practice_id')->references('id')->on('practices');
-            $table->unsignedBigInteger('question_id');
+            $table->unsignedInteger('question_id');
             $table->foreign('question_id')->references('id')->on('questions');
             $table->timestamps();
         });
