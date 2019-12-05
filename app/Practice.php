@@ -13,6 +13,6 @@ class Practice extends Model
         return $this->hasMany('App\Point');
     }
     public function lessons() {
-        return $this->hasMany('App\Lesson');
+        return $this->belongsTo('App\Lesson');
     }
 }

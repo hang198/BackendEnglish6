@@ -10,6 +10,6 @@ class Lesson extends Model
         return $this->belongsTo('App\Unit');
     }
     public function practices() {
-        return $this->belongsTo('App\Practice');
+        return $this->belongsTo('App\Lesson');
     }
 }

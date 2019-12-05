@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePracticesTable extends Migration
+class AddForeignKeyToPracticesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePracticesTable extends Migration
      */
     public function up()
     {
-        Schema::create('practices', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->unsignedInteger('lesson_id');
-            $table->timestamps();
+        Schema::table('practices', function (Blueprint $table) {
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
         });
     }
 
@@ -28,6 +25,8 @@ class CreatePracticesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('practices');
+        Schema::table('practices', function (Blueprint $table) {
+            //
+        });
     }
 }

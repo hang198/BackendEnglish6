@@ -16,12 +16,9 @@ class CreateLessonsTable extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->unsignedInteger('practice_id');
-            $table->foreign('practice_id')->references('id')->on('practices');
+            $table->integer('order_number');
             $table->unsignedInteger('unit_id');
             $table->foreign('unit_id')->references('id')->on('units');
-            $table->unsignedInteger('theory_id');
-            $table->foreign('theory_id')->references('id')->on('theories');
             $table->timestamps();
         });
     }
