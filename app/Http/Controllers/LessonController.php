@@ -2,36 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateUnitFormRequest;
+use App\Http\Requests\CreateLessonFormRequest;
+use App\Services\LessonServiceInterface;
 use App\services\UnitServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 
-class UnitController extends Controller
+class LessonController extends Controller
 {
+    protected $lessonService;
     protected $unitService;
 
-    public function __construct(UnitServiceInterface $unitService)
+    public function __construct(LessonServiceInterface $lessonService,
+                                UnitServiceInterface $unitService)
     {
+        $this->lessonService = $lessonService;
         $this->unitService = $unitService;
     }
 
     public function getAll()
     {
         try {
-            $units = $this->unitService->getAll();
+            $lessons = $this->lessonService->getAll();
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return response()->json(['status' => 'success', 'data' => $units]);
+        return response()->json(['status' => 'success', 'data' => $lessons]);
     }
 
-    public function create(CreateUnitFormRequest $request)
+    public function create(CreateLessonFormRequest $request)
     {
         if (Gate::allows('create')) {
             try {
-                $this->unitService->create($request);
+                $this->lessonService->create($request);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
@@ -44,7 +47,7 @@ class UnitController extends Controller
     {
         if (Gate::allows('delete')) {
             try {
-                $test = $this->unitService->delete($id);
+                $test = $this->lessonService->delete($id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
@@ -56,24 +59,35 @@ class UnitController extends Controller
     public function getByID($id)
     {
         try {
-            $unit = $this->unitService->getByID($id);
+            $lesson = $this->lessonService->getByID($id);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return response()->json(['status' => 'success', 'data' => $unit]);
+        return response()->json(['status' => 'success', 'data' => $lesson]);
     }
 
-    public function update(CreateUnitFormRequest $request, $id)
+    public function update(CreateLessonFormRequest $request, $id)
     {
 
         if (Gate::allows('editor')) {
             try {
-                $this->unitService->update($request, $id);
+                $this->lessonService->update($request, $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
         }
         return response()->json(['status' => 'error'], 403);
+    }
+
+    public function getByUnitId($id)
+    {
+        try {
+            $unit = $this->unitService->getByID($id);
+            $LessonByUnitId = $unit->lesson;
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        return response()->json(['status' => 'success', 'data' => $LessonByUnitId, 'unit' => $unit]);
     }
 }

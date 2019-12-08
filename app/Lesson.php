@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lesson extends Model
 {
-    public function units() {
+    protected $fillable = ['name','content'];
+    public function unit() {
         return $this->belongsTo('App\Unit');
     }
-    public function practices() {
-        return $this->belongsTo('App\Lesson');
+    public function practice() {
+        return $this->hasOne('App\Practice');
     }
 }

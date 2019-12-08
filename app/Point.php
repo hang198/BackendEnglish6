@@ -6,13 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Point extends Model
 {
-    public function users() {
-        return $this->belongsTo('App\User');
+
+    protected $primaryKey = 'id';
+    protected $fillable = ['point', 'practice_id', 'user_id'];
+    public function user() {
+        return $this->belongsTo('App\User','user_id');
     }
-    public function practices() {
+    public function practice() {
         return $this->belongsTo('App\Practice');
     }
-    public function point_answers() {
+    public function answers() {
+        return $this->belongsToMany('App\Answer','point_answers', 'point_id', 'answer_id');
+    }
+    public function selected() {
         return $this->hasMany('App\Point_answer');
     }
+
 }

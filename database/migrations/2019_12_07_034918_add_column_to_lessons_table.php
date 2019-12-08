@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUnitsTable extends Migration
+class AddColumnToLessonsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateUnitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('units', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('image')->nullable();
-            $table->timestamps();
+        Schema::table('lessons', function (Blueprint $table) {
+            $table->text('content')->after('name');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateUnitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('units');
+        Schema::table('lessons', function (Blueprint $table) {
+            //
+        });
     }
 }

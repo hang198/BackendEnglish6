@@ -4,7 +4,6 @@
 namespace App\Repositories;
 
 
-interface UnitRepoInterface
+interface UnitRepoInterface extends RepositoryInterface
 {
-
 }

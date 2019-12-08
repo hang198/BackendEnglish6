@@ -11,6 +11,6 @@ class Role extends Model
         return $this->belongsToMany('App\Permission', 'role_permissions', 'role_id', 'permission_id');
     }
     public function users() {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User');
     }
 }
