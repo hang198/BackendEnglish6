@@ -60,6 +60,7 @@ class LessonController extends Controller
     {
         try {
             $lesson = $this->lessonService->getByID($id);
+            $lesson->practice;
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
@@ -78,16 +79,5 @@ class LessonController extends Controller
             return response()->json(['status' => 'success']);
         }
         return response()->json(['status' => 'error'], 403);
-    }
-
-    public function getByUnitId($id)
-    {
-        try {
-            $unit = $this->unitService->getByID($id);
-            $LessonByUnitId = $unit->lesson;
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-        return response()->json(['status' => 'success', 'data' => $LessonByUnitId, 'unit' => $unit]);
     }
 }

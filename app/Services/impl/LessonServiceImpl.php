@@ -6,15 +6,17 @@ namespace App\Services\impl;
 
 use App\Repositories\LessonRepoInterface;
 use App\Services\LessonServiceInterface;
+use App\services\PracticeServiceInterface;
 
 class LessonServiceImpl implements LessonServiceInterface
 {
     protected $lessonRepo;
     protected $practiceService;
 
-    public function __construct(LessonRepoInterface $lessonRepo)
+    public function __construct(LessonRepoInterface $lessonRepo, PracticeServiceInterface $practiceService)
     {
         $this->lessonRepo = $lessonRepo;
+        $this->practiceService = $practiceService;
     }
 
     public function create($request)

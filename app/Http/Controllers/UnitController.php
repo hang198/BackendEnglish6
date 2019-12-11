@@ -57,6 +57,7 @@ class UnitController extends Controller
     {
         try {
             $unit = $this->unitService->getByID($id);
+            $unit->lessons;
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
