@@ -16,9 +16,9 @@ class CreatePracticeQuestionsTable extends Migration
         Schema::create('practice_questions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('practice_id');
-            $table->foreign('practice_id')->references('id')->on('practices');
+            $table->foreign('practice_id')->references('id')->on('practices')->onDelete('cascade');
             $table->unsignedInteger('question_id');
-            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade');
             $table->timestamps();
         });
     }

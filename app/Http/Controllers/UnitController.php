@@ -29,28 +29,25 @@ class UnitController extends Controller
 
     public function create(CreateUnitFormRequest $request)
     {
-        if (Gate::allows('create')) {
             try {
                 $this->unitService->create($request);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 
     public function delete($id)
     {
-        if (Gate::allows('delete')) {
+
             try {
                 $test = $this->unitService->delete($id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success', $test]);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 
     public function getByID($id)
@@ -66,14 +63,12 @@ class UnitController extends Controller
     public function update(CreateUnitFormRequest $request, $id)
     {
 
-        if (Gate::allows('editor')) {
             try {
                 $this->unitService->update($request, $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 }

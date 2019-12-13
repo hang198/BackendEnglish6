@@ -25,16 +25,13 @@ class QuestionController extends Controller
 
     public function create(Request $request)
     {
-        if (Gate::allows('create')) {
             try {
                 $this->questionService->create($request->all());
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }else {
-            return response()->json(['status' => 'error', 'message' => 'Bạn chưa được cấp quyền'], 403);
-        }
+
     }
 
     public function getAll()
@@ -60,36 +57,30 @@ class QuestionController extends Controller
 
     public function delete($id)
     {
-        if (Gate::allows('delete')){
             try {
                 $this->questionService->delete($id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error', 'message' => 'Bạn chưa được cấp quyền!'], 403);
     }
 
     public function update(QuestionFormRequest $request, $id)
     {
-        if (Gate::allows('editor')){
+
             try {
                 $this->questionService->update($request->all(), $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error', 'message' => 'Bạn chưa được cấp quyền'], 403);
     }
 
     public function getByPracticeId($id)
     {
         try {
-            $questions = $this->questionService->getByPracticeId($id);
-            $quiz = $this->practiceService->getByID($id);
-            return response()->json(['status' => 'success', 'data' => $questions, 'quiz' => $quiz]);
+            $data = $this->questionService->getByPracticeId($id);
+            return response()->json(['status' => 'success', 'data' => $data['questions'], 'practice' => $data['practice']]);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }

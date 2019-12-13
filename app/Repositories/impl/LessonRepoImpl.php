@@ -14,4 +14,8 @@ class LessonRepoImpl extends BaseRepository implements LessonRepoInterface
     {
         return new Lesson();
     }
+    public function getByUnitId($id)
+    {
+        return $this->model->where('unit_id', $id)->get();
+    }
 }

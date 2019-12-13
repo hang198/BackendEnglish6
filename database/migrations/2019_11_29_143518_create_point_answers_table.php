@@ -16,9 +16,9 @@ class CreatePointAnswersTable extends Migration
         Schema::create('point_answers', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('point_id');
-            $table->foreign('point_id')->references('id')->on('points');
+            $table->foreign('point_id')->references('id')->on('points')->onDelete('cascade');
             $table->unsignedInteger('answer_id');
-            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->foreign('answer_id')->references('id')->on('answers')->onDelete('cascade');
             $table->tinyInteger('selected');
             $table->timestamps();
         });

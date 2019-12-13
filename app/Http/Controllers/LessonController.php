@@ -32,34 +32,30 @@ class LessonController extends Controller
 
     public function create(CreateLessonFormRequest $request)
     {
-        if (Gate::allows('create')) {
             try {
                 $this->lessonService->create($request);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
     }
 
     public function delete($id)
     {
-        if (Gate::allows('delete')) {
             try {
                 $test = $this->lessonService->delete($id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success', $test]);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 
     public function getByID($id)
     {
         try {
             $lesson = $this->lessonService->getByID($id);
+            $lesson->practice;
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
@@ -69,25 +65,13 @@ class LessonController extends Controller
     public function update(CreateLessonFormRequest $request, $id)
     {
 
-        if (Gate::allows('editor')) {
+
             try {
                 $this->lessonService->update($request, $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
-    }
 
-    public function getByUnitId($id)
-    {
-        try {
-            $unit = $this->unitService->getByID($id);
-            $LessonByUnitId = $unit->lesson;
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-        return response()->json(['status' => 'success', 'data' => $LessonByUnitId, 'unit' => $unit]);
     }
 }

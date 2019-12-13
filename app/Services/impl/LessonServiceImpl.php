@@ -6,15 +6,17 @@ namespace App\Services\impl;
 
 use App\Repositories\LessonRepoInterface;
 use App\Services\LessonServiceInterface;
+use App\services\PracticeServiceInterface;
 
 class LessonServiceImpl implements LessonServiceInterface
 {
     protected $lessonRepo;
     protected $practiceService;
 
-    public function __construct(LessonRepoInterface $lessonRepo)
+    public function __construct(LessonRepoInterface $lessonRepo, PracticeServiceInterface $practiceService)
     {
         $this->lessonRepo = $lessonRepo;
+        $this->practiceService = $practiceService;
     }
 
     public function create($request)
@@ -40,7 +42,7 @@ class LessonServiceImpl implements LessonServiceInterface
         foreach ($practice as $item) {
             $this->practiceService->delete($item->id);
         }
-        $this->lessonRepo->delete($id);
+        $this->lessonRepo->delete($lesson);
     }
 
 
@@ -49,5 +51,9 @@ class LessonServiceImpl implements LessonServiceInterface
         $lesson = $this->getByID($id);
         $data = $request->all();
         $this->lessonRepo->update($lesson, $data);
+    }
+    public function getByUnitId($id)
+    {
+        return $this->lessonRepo->getByUnitId($id);
     }
 }

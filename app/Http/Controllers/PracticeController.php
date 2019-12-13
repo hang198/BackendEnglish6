@@ -22,15 +22,13 @@ class practiceController extends Controller
 
     public function create(CreatePracticeFormRequest $request)
     {
-        if (Gate::allows('create')) {
             try {
                 $test = $this->practiceService->create($request->all());
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success', 'data' => $test]);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 
     public function getAll()
@@ -67,28 +65,24 @@ class practiceController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (Gate::allows('editor')){
             try {
                 $this->practiceService->update($request->all(), $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
+
     }
 
     public function delete($id)
     {
-        if (Gate::allows('delete')){
+
             try {
                 $this->practiceService->delete($id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-        }
-        return response()->json(['status' => 'error'], 403);
 
     }
 

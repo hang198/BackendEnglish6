@@ -8,6 +8,6 @@ class Unit extends Model
 {
     protected $fillable = ['name','image'];
     public function lessons() {
-        return $this->hasMany('App\Lesson');
+        return $this->hasMany('App\Lesson', 'unit_id');
     }
 }
