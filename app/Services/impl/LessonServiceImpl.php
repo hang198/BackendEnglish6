@@ -42,7 +42,7 @@ class LessonServiceImpl implements LessonServiceInterface
         foreach ($practice as $item) {
             $this->practiceService->delete($item->id);
         }
-        $this->lessonRepo->delete($id);
+        $this->lessonRepo->delete($lesson);
     }
 
 
@@ -51,5 +51,9 @@ class LessonServiceImpl implements LessonServiceInterface
         $lesson = $this->getByID($id);
         $data = $request->all();
         $this->lessonRepo->update($lesson, $data);
+    }
+    public function getByUnitId($id)
+    {
+        return $this->lessonRepo->getByUnitId($id);
     }
 }

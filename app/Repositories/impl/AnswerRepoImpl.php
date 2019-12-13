@@ -17,7 +17,7 @@ class AnswerRepoImpl extends BaseRepository implements AnswerRepoInterface
     }
     public function delete($id)
     {
-       $this->model->where('ask_id', $id)->delete();
+       $this->model->where('question_id', $id)->delete();
     }
 
 }

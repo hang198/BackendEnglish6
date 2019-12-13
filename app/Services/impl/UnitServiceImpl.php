@@ -49,8 +49,8 @@ class UnitServiceImpl implements UnitServiceInterface
         if ($unit->image) {
             $this->deleteOldImage($unit->image);
         }
-        $practice = $this->lessonService->getByUnitId($id);
-        foreach ($practice as $item) {
+        $lesson = $this->lessonService->getByUnitId($id);
+        foreach ($lesson as $item) {
             $this->lessonService->delete($item->id);
         }
         $this->unitRepo->delete($id);

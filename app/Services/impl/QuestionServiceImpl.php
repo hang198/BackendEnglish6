@@ -61,13 +61,16 @@ class QuestionServiceImpl implements QuestionServiceInterface
 
     public function getByPracticeId($id)
     {
-        $questions = [];
+        $item = [];
         $practice = $this->practiceService->getByID($id);
         $questions = $practice->questions;
         foreach ($questions as $question){
             $question->answers;
-            $questions[] = ['question' => $question];
+            $item[] = ['question' => $question];
         }
-        return $questions;
+        return [
+          'practice' => $practice,
+          'questions' => $item,
+        ];
     }
 }

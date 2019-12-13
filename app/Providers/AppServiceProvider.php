@@ -6,12 +6,14 @@ use App\Practice;
 use App\Repositories\AnswerRepoInterface;
 use App\Repositories\impl\AnswerRepoImpl;
 use App\Repositories\impl\LessonRepoImpl;
+use App\Repositories\impl\PointRepoImpl;
 use App\Repositories\impl\PracticeRepoImpl;
 use App\Repositories\impl\QuestionRepoImpl;
 use App\Repositories\impl\RoleRepoImpl;
 use App\Repositories\impl\UnitRepoImpl;
 use App\Repositories\impl\UserRepoImpl;
 use App\Repositories\LessonRepoInterface;
+use App\Repositories\PointRepoInterface;
 use App\Repositories\PracticeRepoInterface;
 use App\Repositories\QuestionRepoInterface;
 use App\Repositories\RoleRepoInterface;
@@ -20,12 +22,14 @@ use App\Repositories\UserRepoInterface;
 use App\services\AnswerServiceInterface;
 use App\services\impl\AnswerServiceImpl;
 use App\Services\impl\LessonServiceImpl;
+use App\services\impl\PointServiceImpl;
 use App\services\impl\PracticeServiceImpl;
 use App\services\impl\QuestionServiceImpl;
 use App\services\impl\RoleServiceImpl;
 use App\services\impl\UnitServiceImpl;
 use App\services\impl\UserServiceImpl;
 use App\Services\LessonServiceInterface;
+use App\services\PointServiceInterface;
 use App\services\PracticeServiceInterface;
 use App\services\QuestionServiceInterface;
 use App\services\RoleServiceInterface;
@@ -56,6 +60,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(AnswerRepoInterface::class, AnswerRepoImpl::class);
         $this->app->singleton(LessonServiceInterface::class, LessonServiceImpl::class);
         $this->app->singleton(LessonRepoInterface::class, LessonRepoImpl::class);
+        $this->app->singleton(PointServiceInterface::class, PointServiceImpl::class);
+        $this->app->singleton(PointRepoInterface::class, PointRepoImpl::class);
     }
 
     /**

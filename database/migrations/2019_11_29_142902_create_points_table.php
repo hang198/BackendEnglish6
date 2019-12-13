@@ -18,7 +18,7 @@ class CreatePointsTable extends Migration
             $table->integer('point');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('practice_id');
-            $table->foreign('practice_id')->references('id')->on('practices');
+            $table->foreign('practice_id')->references('id')->on('practices')->onDelete('cascade');
             $table->timestamps();
         });
     }
