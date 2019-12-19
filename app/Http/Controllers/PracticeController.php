@@ -39,7 +39,7 @@ class practiceController extends Controller
         return response()->json(['status' => 'success', 'data' => $practices]);
     }
 
-    public function getByID($id)
+    public function getByLessonId($id)
     {
         try {
             $lesson = $this->lessonService->getByID($id);
@@ -48,6 +48,16 @@ class practiceController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
         return response()->json(['status' => 'success', 'data' => $practiceByLesson,'lesson' => $lesson]);
+    }
+    public function getByID($id)
+    {
+        try {
+            $practice = $this->practiceService->getByID($id);
+            $practice->questions;
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        return response()->json(['status' => 'success', 'data' => $practice]);
     }
 
 

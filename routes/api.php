@@ -37,6 +37,7 @@ Route::prefix('lessons')->group(function () {
     Route::post('create', 'LessonController@create');
     Route::post('{id}/update', 'LessonController@update');
     Route::delete('{id}/delete', 'LessonController@delete');
+    Route::get('unit/{id}','LessonController@getByUnitId');
 });
 
 Route::prefix('questions')->group(function () {
@@ -57,6 +58,7 @@ Route::prefix('practices')->group(function () {
         Route::get('{id}/point', 'PracticeController@getPointByID');
         Route::get('{id}', 'PracticeController@getByID');
         Route::get('', 'PracticeController@getAll');
+        Route::get('lesson/{id}','PracticeController@getByLessonId');
 
 
 });
