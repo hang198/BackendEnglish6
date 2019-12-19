@@ -50,7 +50,7 @@ class LessonController extends Controller
 
     }
 
-    public function getByID($id)
+    public function getByUnitId($id)
     {
         try {
             $unit = $this->unitService->getByID($id);
@@ -60,6 +60,16 @@ class LessonController extends Controller
         }
         return response()->json(['status' => 'success', 'data' => $lessonByUnit,'unit' => $unit]);
     }
+    public function getByID($id)
+    {
+        try {
+            $lesson = $this->lessonService->getByID($id);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        return response()->json(['status' => 'success', 'data' => $lesson]);
+    }
+
 
     public function update(Request $request, $id)
     {
