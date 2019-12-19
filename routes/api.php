@@ -29,8 +29,6 @@ Route::prefix('units')->group(function () {
         Route::post('{id}/update', 'UnitController@update');
         Route::get('{id}', 'UnitController@getByID');
         Route::get('', 'UnitController@getAll');
-
-
 });
 
 Route::prefix('lessons')->group(function () {
