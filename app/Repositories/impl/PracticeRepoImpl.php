@@ -18,19 +18,19 @@ class PracticeRepoImpl extends BaseRepository implements PracticeRepoInterface
 
     public function create($data)
     {
-        $quiz = $this->model->create($data);
-        $quiz->asks()->attach($data['asks']);
+        $practice = $this->model->create($data);
+        $practice->questions()->attach($data['questions']);
     }
 
     public function update($obj, $data)
     {
         $obj->update($data);
-        $obj->asks()->sync($data['asks']);
+        $obj->questions()->sync($data['questions']);
     }
 
     public function delete($object)
     {
-        $object->asks()->detach();
+        $object->questions()->detach();
         $object->delete();
     }
 

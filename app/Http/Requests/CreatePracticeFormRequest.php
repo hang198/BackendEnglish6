@@ -24,7 +24,7 @@ class CreatePracticeFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:quiz_test,name'
+            'name' => 'required|unique:practices,name'
         ];
     }
 

@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreatePracticeFormRequest;
-use App\services\LessonServiceInterface;
+use App\Services\LessonServiceInterface;
 use App\services\PracticeServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class practiceController extends Controller
 {
     protected $practiceService;
-    protected $lessonService;
+    private $lessonService;
 
-    public function __construct(PracticeServiceInterface $practiceService,
-                                LessonServiceInterface $lessonService)
+    public function __construct(PracticeServiceInterface $practiceService,LessonServiceInterface $lessonService)
     {
         $this->practiceService = $practiceService;
         $this->lessonService = $lessonService;
@@ -44,24 +42,14 @@ class practiceController extends Controller
     public function getByID($id)
     {
         try {
-            $practice = $this->practiceService->getByID($id);
-            $practice->questions;
+            $lesson = $this->lessonService->getByID($id);
+            $practiceByLesson = $lesson->practice;
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return response()->json(['status' => 'success', 'data' => $practice]);
+        return response()->json(['status' => 'success', 'data' => $practiceByLesson,'lesson' => $lesson]);
     }
 
-    public function getByLessonId($id)
-    {
-        try {
-            $lesson = $this->lessonService->getByID($id);
-            $practiceByLessonId = $lesson->practice;
-        } catch (\Exception $e) {
-            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
-        }
-        return response()->json(['status' => 'success', 'data' => $practiceByLessonId, 'lesson' => $lesson]);
-    }
 
     public function update(Request $request, $id)
     {

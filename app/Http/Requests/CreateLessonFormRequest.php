@@ -23,11 +23,17 @@ class CreateLessonFormRequest extends FormRequest
      */
     public function rules()
     {
+        return [
+            'name' => 'required|unique:lessons,name',
+            'content' => 'required'
+        ];
+    }
+    public function messages()
+    {
         return[
-            'name.required' => 'Tên danh mục không thể bỏ trống!',
+            'name.required' => 'Tên lesson không thể bỏ trống!',
             'name.unique' => 'Tên danh mục này đã tồn tại!',
             'content.required' => 'Tên danh mục không thể bỏ trống!',
-            'content.unique' => 'Tên danh mục này đã tồn tại!',
         ];
     }
 }
