@@ -24,25 +24,21 @@ Route::middleware('jwt.verify')->get('auth/user', 'UserController@getCurrentUser
 
 
 Route::prefix('units')->group(function () {
-    Route::middleware('jwt.verify')->group(function () {
-        Route::get('', 'UnitController@getAll');
         Route::post('create', 'UnitController@create');
         Route::delete('{id}/delete', 'UnitController@delete');
         Route::post('{id}/update', 'UnitController@update');
-    });
-    Route::get('{id}', 'UnitController@getByID');
+        Route::get('{id}', 'UnitController@getByID');
+        Route::get('', 'UnitController@getAll');
+
 
 });
 
 Route::prefix('lessons')->group(function () {
-    Route::middleware('jwt.verify')->group(function () {
-        Route::get('', 'LessonController@getAll');
-        Route::post('create', 'LessonController@create');
-        Route::delete('{id}/delete', 'LessonController@delete');
-        Route::post('{id}/update', 'LessonController@update');
-    });
     Route::get('{id}', 'LessonController@getByID');
-
+    Route::get('', 'LessonController@getAll');
+    Route::post('create', 'LessonController@create');
+    Route::post('{id}/update', 'LessonController@update');
+    Route::delete('{id}/delete', 'LessonController@delete');
 });
 
 Route::prefix('questions')->group(function () {
@@ -55,17 +51,24 @@ Route::prefix('questions')->group(function () {
 });
 
 Route::prefix('practices')->group(function () {
-    Route::middleware('jwt.verify')->group(function () {
-        Route::get('', 'PracticeController@getAll');
-        Route::get('{id}', 'PracticeController@getByID');
         Route::post('create', 'PracticeController@create');
         Route::delete('{id}/delete', 'PracticeController@delete');
         Route::post('{id}/update', 'PracticeController@update');
         Route::post('/point/create', 'PointController@create');
         Route::get('/point/{id}', 'PointController@getById');
         Route::get('{id}/point', 'PracticeController@getPointByID');
-        Route::get('lesson/{id}', 'PracticeController@getByLessonId');
-    });
+        Route::get('{id}', 'PracticeController@getByID');
+        Route::get('', 'PracticeController@getAll');
+
+
+});
+
+Route::prefix('users')->group(function () {
+    Route::get('', 'UserController@getAll');
+    Route::get('{id}', 'UserController@getById');
+    Route::post('{id}/update', 'UserController@update');
+    Route::put('{id}/edit-info', 'UserController@editInfo');
+    Route::post('/change-password', 'UserController@changePassword');
 });
 
 Route::prefix('points')->group(function () {

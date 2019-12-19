@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Practice;
 use App\Repositories\AnswerRepoInterface;
 use App\Repositories\impl\AnswerRepoImpl;
 use App\Repositories\impl\LessonRepoImpl;
@@ -52,14 +51,14 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(RoleRepoInterface::class, RoleRepoImpl::class);
         $this->app->singleton(UnitServiceInterface::class, UnitServiceImpl::class);
         $this->app->singleton(UnitRepoInterface::class, UnitRepoImpl::class);
+        $this->app->singleton(LessonServiceInterface::class, LessonServiceImpl::class);
+        $this->app->singleton(LessonRepoInterface::class, LessonRepoImpl::class);
         $this->app->singleton(PracticeServiceInterface::class, PracticeServiceImpl::class);
         $this->app->singleton(PracticeRepoInterface::class, PracticeRepoImpl::class);
         $this->app->singleton(QuestionServiceInterface::class, QuestionServiceImpl::class);
         $this->app->singleton(QuestionRepoInterface::class, QuestionRepoImpl::class);
         $this->app->singleton(AnswerServiceInterface::class, AnswerServiceImpl::class);
         $this->app->singleton(AnswerRepoInterface::class, AnswerRepoImpl::class);
-        $this->app->singleton(LessonServiceInterface::class, LessonServiceImpl::class);
-        $this->app->singleton(LessonRepoInterface::class, LessonRepoImpl::class);
         $this->app->singleton(PointServiceInterface::class, PointServiceImpl::class);
         $this->app->singleton(PointRepoInterface::class, PointRepoImpl::class);
     }

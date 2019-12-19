@@ -6,7 +6,6 @@ use App\Http\Requests\CreateLessonFormRequest;
 use App\Services\LessonServiceInterface;
 use App\services\UnitServiceInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 
 class LessonController extends Controller
 {
@@ -33,11 +32,11 @@ class LessonController extends Controller
     public function create(CreateLessonFormRequest $request)
     {
             try {
-                $this->lessonService->create($request);
+                $test = $this->lessonService->create($request->all());
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
-            return response()->json(['status' => 'success']);
+        return response()->json(['status' => 'success', 'data' => $test]);
     }
 
     public function delete($id)
@@ -54,24 +53,21 @@ class LessonController extends Controller
     public function getByID($id)
     {
         try {
-            $lesson = $this->lessonService->getByID($id);
-            $lesson->practice;
+            $unit = $this->unitService->getByID($id);
+            $lessonByUnit = $unit->lessons;
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
-        return response()->json(['status' => 'success', 'data' => $lesson]);
+        return response()->json(['status' => 'success', 'data' => $lessonByUnit,'unit' => $unit]);
     }
 
-    public function update(CreateLessonFormRequest $request, $id)
+    public function update(Request $request, $id)
     {
-
-
             try {
-                $this->lessonService->update($request, $id);
+                $this->lessonService->update($request->all(), $id);
             } catch (\Exception $e) {
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
-
     }
 }

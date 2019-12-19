@@ -24,6 +24,9 @@ class UserServiceImpl implements UserServiceInterface
     public function getAll()
     {
         $users = $this->userRepo->getAll();
+        foreach ($users as $user) {
+            $user->role;
+        }
         return $users;
     }
 
