@@ -24,21 +24,21 @@ class VideoRequest extends FormRequest
     public function rules()
     {
         return [
-            'txtTitleVideo' => 'required|unique:videos,videotitle', 
-            'id_category'   => 'required',
-            'imagesStory'   => 'image',
-            'urlVideo'      => 'required|unique:videos,link'
+            'title' => 'required|unique:videos,title',
+            'catevideo_id'   => 'required',
+            'image'   => 'image',
+            'link'      => 'required|unique:videos,link'
         ];
     }
 
     public function messages(){
         return [
-            'txtTitleVideo.required' => 'Please enter title video',
-            'txtTitleVideo.unique' =>'This name video is exist', 
-            'id_category.required' => 'Please choose category video',
-            'urlVideo.required' => 'Please enter link video',
-            'urlVideo.unique' =>'This link video is exist',
-            'imagesStory.image' => 'This file is not image'
-        ]; 
+            'title.required' => 'Please enter title video',
+            'title.unique' =>'This name video is exist',
+            'catevideo_id.required' => 'Please choose category video',
+            'link.required' => 'Please enter link video',
+            'link.unique' =>'This link video is exist',
+            'image.image' => 'This file is not image'
+        ];
     }
 }

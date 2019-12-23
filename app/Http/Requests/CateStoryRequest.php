@@ -24,23 +24,22 @@ class CateStoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'txtTitleEn' => 'required|unique:catestory,catesto_title',
-            'Type' => 'required|unique:catestory,type',
-            'txtOrder' => 'required|unique:catestory,order',
-            'imagesStory'   => 'image'
+            'title' => 'required|unique:catestory,title',
+            'type' => 'required|unique:catestory,type',
+            'order' => 'required|unique:catestory,order',
+            'image'   => 'image'
         ];
     }
 
     public function messages(){
         return [
-            'txtTitleEn.required' => 'Please enter Title-En category story',
-            'txtTitleEn.unique' =>'This name catestory is exist',
-            'Type.required' => 'Please enter type category story',
-            'Type.unique' =>'This type catestory is exist',
-            'txtOrder.required' => 'Please enter Order number category story',
-            'txtOrder.unique' =>'This Order number catestory is exist',
-            //'imagesStory.required' => 'Please choose image',
-            'imagesStory.image' => 'This file is not image'
-        ]; 
+            'title.required' => 'Please enter Title-En category story',
+            'title.unique' =>'This name catestory is exist',
+            'type.required' => 'Please enter type category story',
+            'type.unique' =>'This type catestory is exist',
+            'order.required' => 'Please enter Order number category story',
+            'order.unique' =>'This Order number catestory is exist',
+            'image.image' => 'This file is not image'
+        ];
     }
 }

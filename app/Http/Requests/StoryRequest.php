@@ -24,19 +24,18 @@ class StoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'txtTitleStory' => 'required|unique:stories,storytitle', 
-            'id_category'   => 'required',
-            'imagesStory'   => 'image'
+            'title' => 'required|unique:stories,title',
+            'catestory_id'   => 'required',
+            'image'   => 'image'
         ];
     }
 
     public function messages(){
         return [
-            'txtTitleStory.required' => 'Please enter title story',
-            'txtTitleStory.unique' =>'This name story is exist', 
-            'id_category.required' => 'Please choose id category story',
-            //'imagesStory.required' => 'Please choose image',
-            'imagesStory.image' => 'This file is not image'
-        ]; 
+            'title.required' => 'Please enter title story',
+            'title.unique' =>'This name story is exist',
+            'catestory_id.required' => 'Please choose id category story',
+            'image.image' => 'This file is not image'
+        ];
     }
 }

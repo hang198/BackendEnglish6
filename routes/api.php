@@ -111,13 +111,11 @@ Route::group(['prefix' => 'stories'], function(){
 
 //danh muc video
 Route::group(['prefix' => 'catevideo'], function(){
-    Route::get('list', 'CateVideoController@getList');
-    Route::get('add', 'CateVideoController@getAdd');
-    Route::post('add', 'CateVideoController@postAdd');
-
-    Route::get('delete/{id}', 'CateVideoController@getDelete');
-    Route::get('edit/{id}', 'CateVideoController@getEdit');
-    Route::post('edit/{id}', 'CateVideoController@postEdit');
+    Route::get('', 'CateVideoController@index');
+    Route::post('', 'CateVideoController@create');
+    Route::get('{id}', 'CateVideoController@show');
+    Route::put('{id}', 'CateVideoController@update');
+    Route::delete('{id}', 'CateVideoController@delete');
 });
 
 //videos

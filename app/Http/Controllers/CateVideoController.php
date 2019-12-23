@@ -9,100 +9,89 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CateVideoRequest;
 
 use App\CateVideo;
-use File;
+use Illuminate\Support\Facades\File;
 
 class CateVideoController extends Controller
 {
-    public function getList()
+	public function index()
 	{
-		$data = CateVideo::select('id', 'catevi_title', 'desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
-		return view('admin.catevideo.list', compact('data'));
+		$catevideos = CateVideo::select('id', 'title', 'desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
+		return response()->json(['status' => 'success', 'data' => $catevideos]);
 	}
-    public function getAdd()
-    {
-    	$parent = CateVideo::select('id', 'catevi_title')->get()->toArray();
-    	return view('admin.catevideo.add', compact('parent'));
-    }
-    public function postAdd(CateVideoRequest $request){
-    	$catevideo = new CateVideo();
-    	$catevideo->catevi_title = $request->txtTitleEn;
-    	$catevideo->desc = $request->txtDesc;
-    	$catevideo->type = $request->Type;
-    	$catevideo->order = $request->txtOrder;
 
-    	$extension = ['jpg','png','jpeg','end'];
-        if($request->hasFile('imagesStory')){
-            $file = $request->file('imagesStory');
-            $duoi = $file->getClientOriginalExtension();
-            foreach ($extension as $key) {
-                # code...
-                if($key == 'end'){
-                    return redirect('admin/catevideo/add')->with('Warning','Just except .jpg, .png, .jpeg');
-                    
-                }
-                else if($duoi == $key){
-                    break;
-                }
-            }
-            $name = $file->getClientOriginalName();
-            $file->move("resources/upload/imagevideo/",$name);
-            $catevideo->image = $name;
-        }
-        else{
-            $catevideo->image = "";
-        }
-        $catevideo->save();
-        return redirect('admin/catevideo/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Add Category']);
-    }
+	public function create(CateVideoRequest $request)
+	{
+		$catevideo = new CateVideo();
+		$catevideo->title = $request->title;
+		$catevideo->desc = $request->desc;
+		$catevideo->type = $request->type;
+		$catevideo->order = $request->order;
 
-    public function getDelete($id)
-    {
-    	$catevideo = CateVideo::find($id);
-    	File::delete('resources/upload/imagestory/'.$catevideo->image);
-    	$catevideo->delete($id);
-    	return redirect()->route('admin.catevideo.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
-    }
+		$extension = ['jpg', 'png', 'jpeg', 'end'];
+		if ($request->hasFile('imagesStory')) {
+			$file = $request->file('imagesStory');
+			$duoi = $file->getClientOriginalExtension();
+			foreach ($extension as $key) {
+				# code...
+				if ($key == 'end') {
+					return redirect('admin/catevideo/add')->with('Warning', 'Just except .jpg, .png, .jpeg');
+				} else if ($duoi == $key) {
+					break;
+				}
+			}
+			$name = $file->getClientOriginalName();
+			$file->move("resources/upload/imagevideo/", $name);
+			$catevideo->image = $name;
+		} else {
+			$catevideo->image = "";
+		}
+		$catevideo->save();
+		return response()->json(['status' => 'success', 'data' => $catevideo, 'message' => 'Success !! Complete Add Category']);
+	}
 
-    public function getEdit($id)
-    {
-    	$catevideo = CateVideo::findOrFail($id)->toArray();
-    	//$story_image = CateStory::find($id);
-    	return view('admin.catevideo.edit', compact('catevideo'));
-    }
+	public function show($id)
+	{
+		$catevideo = CateVideo::find($id);
+		return response()->json(['status' => 'success', 'data' => $catevideo]);
+	}
 
-    public function postEdit(Request $request, $id)
-    {
-    	//yêu cầu nhập chỉnh sửa
-    	$this->validate($request,[
-            'txtTitleEn'=>'required',
-            'Type'=>'required',
-            ],[
-            'txtTitleEn.required'=>'Please enter title category video',
-            'Type.required'=>'Please enter type category video',
-            ]);
-    	//cập nhật lại dữ liệu
-    	$catevideo = CateVideo::find($id);
-    	$catevideo->catevi_title = $request->txtTitleEn;
-    	$catevideo->desc = $request->txtDesc;
-    	$catevideo->type = $request->Type;
-    	$catevideo->order = $request->txtOrder;
+	public function update(Request $request, $id)
+	{
+		//yêu cầu nhập chỉnh sửa
+		$this->validate($request, [
+			'title' => 'required',
+			'type' => 'required',
+		], [
+			'title.required' => 'Please enter title category video',
+			'type.required' => 'Please enter type category video',
+		]);
+		//cập nhật lại dữ liệu
+		$catevideo = CateVideo::find($id);
+		$catevideo->title = $request->title;
+		$catevideo->desc = $request->desc;
+		$catevideo->type = $request->type;
+		$catevideo->order = $request->order;
 
-    	//xử lý hình ảnh
-    	$img_current = 'resources/upload/imagevideo/'.$request->input('imgCurrent');
-    	if(!empty($request->file('imagesStory'))){
-    		//echo "có file";
-    		$file_name = $request->file('imagesStory')->getClientOriginalName();
-    		$catevideo->image = $file_name;
-    		$request->file('imagesStory')->move('resources/upload/imagevideo/',$file_name);
-    		if(File::exists($img_current)){
-    			File::delete($img_current);
-    		}
-    	}
-    	else{
-    		echo "không có file ảnh";
-    	}
+		//xử lý hình ảnh
+		$img_current = 'resources/upload/imagevideo/' . $request->input('imgCurrent');
+		if (!empty($request->file('imagesStory'))) {
+			//echo "có file";
+			$file_name = $request->file('imagesStory')->getClientOriginalName();
+			$catevideo->image = $file_name;
+			$request->file('imagesStory')->move('resources/upload/imagevideo/', $file_name);
+			if (File::exists($img_current)) {
+				File::delete($img_current);
+			}
+		}
 
-    	$catevideo->save();
-    	return redirect('admin/catevideo/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Edit Category Video']);
-    }
+		$catevideo->save();
+		return response()->json(['status' => 'success', 'data' => $catevideo, 'message' => 'Success !! Complete Edit Category Video']);
+	}
+
+	public function delete($id)
+	{
+		$catevideo = CateVideo::find($id);
+		$catevideo->delete($id);
+		return response()->json(['status' => 'success', 'data' => $catevideo,  'message' => 'success !! Complete Deleted']);
+	}
 }
