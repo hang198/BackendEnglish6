@@ -19,6 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->unsignedInteger('role_id');
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            $table->string('age')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
