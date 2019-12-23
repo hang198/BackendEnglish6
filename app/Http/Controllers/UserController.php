@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordFormRequest;
 use App\Http\Requests\RegisterFormRequest;
+use App\Http\Requests\UserFormRequest;
 use App\services\UserServiceInterface;
 use App\User;
 use Illuminate\Http\Request;
@@ -110,7 +111,7 @@ class UserController extends Controller
         return response()->json(['status' => true]);
     }
 
-    public function editInfo(Request $request, $id)
+    public function editInfo(UserFormRequest $request, $id)
     {
         try {
             $user = $this->userService->editInfo($request, $id);

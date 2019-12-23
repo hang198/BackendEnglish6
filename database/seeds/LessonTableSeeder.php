@@ -19,17 +19,17 @@ class LessonTableSeeder extends Seeder
         $lesson = new \App\Lesson();
         $lesson->name = 'lesson2';
         $lesson->content = 'content2';
-        $lesson->unit_id = '2';
+        $lesson->unit_id = '1';
         $lesson->save();
         $lesson = new \App\Lesson();
         $lesson->name = 'lesson3';
         $lesson->content = 'content3';
-        $lesson->unit_id = '3';
+        $lesson->unit_id = '2';
         $lesson->save();
         $lesson = new \App\Lesson();
         $lesson->name = 'lesson4';
         $lesson->content = 'content4';
-        $lesson->unit_id = '4';
+        $lesson->unit_id = '3';
         $lesson->save();
     }
 }

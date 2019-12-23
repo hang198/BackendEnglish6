@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\services\impl;
-
 
 use App\Repositories\UnitRepoInterface;
 use App\Repositories\PracticeRepoInterface;
@@ -33,9 +31,9 @@ class UnitServiceImpl implements UnitServiceInterface
         $this->unitRepo->create($data);
     }
 
-    public function getByID($id)
+    public function storeImage($image)
     {
-        return $this->unitRepo->getByID($id);
+        return $image->store('images', 'public');
     }
 
     public function getAll()
@@ -56,16 +54,14 @@ class UnitServiceImpl implements UnitServiceInterface
         $this->unitRepo->delete($id);
     }
 
-
-    public function storeImage($image)
+    public function getByID($id)
     {
-        return $image->store('images', 'public');
+        return $this->unitRepo->getByID($id);
     }
 
     public function deleteOldImage($nameImage)
     {
         Storage::disk('public')->delete($nameImage);
-
     }
 
     public function update($request, $id)
