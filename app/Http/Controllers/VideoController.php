@@ -8,26 +8,19 @@ use App\Http\Controllers\Controller;
 
 use App\Http\Requests\VideoRequest;
 use App\CateVideo;
-use App\Videos;
+use App\Video;
 use DB;
 use File;
 
 class VideoController extends Controller
 {
-    public function getList()
-	{
-		$dataVideo = Videos::select('id', 'videotitle', 'desc', 'catevideo_id')->orderBy('id', 'DESC')->get()->toArray();
-		//return view('admin.story.list', compact('data'));
+    public function index() {
+		$dataVideo = Video::select('id', 'videotitle', 'desc', 'catevideo_id')->orderBy('id', 'DESC')->get()->toArray();
 		return view('admin.videos.list',compact('dataVideo'));
-	}
-    public function getAdd()
-    {
-    	//$parent = CateStory::select('id', 'videotitle')->get()->toArray();
-    	$Listcate = DB::table('catevideo')->get();
-    	return view('admin.videos.add', compact('Listcate'));
     }
-    public function postAdd(VideoRequest $request){
-    	$video = new Videos();
+
+    public function create(VideoRequest $request){
+    	$video = new Video();
     	$video->videotitle = $request->txtTitleVideo;
         $video->link = $request->urlVideo;
     	$video->desc = $request->txtDesc;
@@ -40,7 +33,7 @@ class VideoController extends Controller
                 # code...
                 if($key == 'end'){
                     return redirect('admin/videos/add')->with('Warning','Just except .jpg, .png, .jpeg');
-                    
+
                 }
                 else if($duoi == $key){
                     break;
@@ -57,22 +50,13 @@ class VideoController extends Controller
         return redirect('admin/videos/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Add Video']);
     }
 
-    public function getDelete($id)
-    {
-    	$video = Videos::find($id);
-        File::delete('resources/upload/imagevideo/'.$video->image);
-    	$video->delete($id);
-    	return redirect()->route('admin.videos.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
-    }
-    public function getEdit($id)
-    {
-        $data = Videos::findOrFail($id)->toArray();
-        //$dataCate = CateVideo::select('id', 'catesto_title')->get();
+    public function show($id) {
+        $data = Video::findOrFail($id)->toArray();
         $Listcate = DB::table('catevideo')->get();
         return view('admin.videos.edit', compact('data', 'Listcate'));
     }
 
-    public function postEdit(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //yêu cầu nhập chỉnh sửa
         $this->validate($request,[
@@ -83,7 +67,7 @@ class VideoController extends Controller
             'urlVideo.required' => 'Please enter link video',
             ]);
         //cập nhật lại dữ liệu
-        $video = Videos::find($id);
+        $video = Video::find($id);
         $video->videotitle = $request->txtTitleVideo;
         $video->link = $request->urlVideo;
         $video->desc = $request->txtDesc;
@@ -106,5 +90,12 @@ class VideoController extends Controller
 
         $video->save();
         return redirect('admin/videos/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Edit Video']);
+    }
+
+    public function delete($id) {
+    	$video = Video::find($id);
+        File::delete('resources/upload/imagevideo/'.$video->image);
+    	$video->delete($id);
+    	return redirect()->route('admin.videos.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
     }
 }

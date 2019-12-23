@@ -90,50 +90,41 @@ Route::prefix('roles')->group(function (){
     Route::get('/', 'RoleController@getAll');
 });
 
-// code mới
-Route::group(['prefix' => 'admin'], function(){
 
-    //danh muc truyen
-    Route::group(['prefix' => 'story'], function(){
-        Route::get('list', ['as' => 'admin.story.list', 'uses' => 'CateStoryController@getList']);
-        Route::get('add', ['as' => 'admin.story.getAdd', 'uses' => 'CateStoryController@getAdd']);
-        Route::post('add', ['as' => 'admin.story.postAdd', 'uses' => 'CateStoryController@postAdd']);
+//danh muc truyen
+Route::group(['prefix' => 'catestory'], function(){
+    Route::get('', 'CateStoryController@index');
+    Route::post('', 'CateStoryController@create');
+    Route::get('{id}', 'CateStoryController@show');
+    Route::put('{id}', 'CateStoryController@update');
+    Route::delete('{id}', 'CateStoryController@delete');
+});
 
-        Route::get('delete/{id}', ['as' => 'admin.story.getDelete', 'uses' => 'CateStoryController@getDelete']);
-        Route::get('edit/{id}', ['as' => 'admin.story.getEdit', 'uses' => 'CateStoryController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.story.postEdit', 'uses' => 'CateStoryController@postEdit']);
-    });
+//truyen chi tiet
+Route::group(['prefix' => 'stories'], function(){
+    Route::get('', 'StoryController@index');
+    Route::post('', 'StoryController@create');
+    Route::get('{id}', 'StoryController@show');
+    Route::put('{id}', 'StoryController@update');
+    Route::delete('{id}', 'StoryController@delete');
+});
 
-    //truyen chi tiet
-    Route::group(['prefix' => 'stories'], function(){
-        Route::get('list', ['as' => 'admin.stories.list', 'uses' => 'StoriesController@getList']);
-        Route::get('add', ['as' => 'admin.stories.getAdd', 'uses' => 'StoriesController@getAdd']);
-        Route::post('add', ['as' => 'admin.stories.postAdd', 'uses' => 'StoriesController@postAdd']);
+//danh muc video
+Route::group(['prefix' => 'catevideo'], function(){
+    Route::get('list', 'CateVideoController@getList');
+    Route::get('add', 'CateVideoController@getAdd');
+    Route::post('add', 'CateVideoController@postAdd');
 
-        Route::get('delete/{id}', ['as' => 'admin.stories.getDelete', 'uses' => 'StoriesController@getDelete']);
-        Route::get('edit/{id}', ['as' => 'admin.stories.getEdit', 'uses' => 'StoriesController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.stories.postEdit', 'uses' => 'StoriesController@postEdit']);
-    });
+    Route::get('delete/{id}', 'CateVideoController@getDelete');
+    Route::get('edit/{id}', 'CateVideoController@getEdit');
+    Route::post('edit/{id}', 'CateVideoController@postEdit');
+});
 
-    //danh muc video
-    Route::group(['prefix' => 'catevideo'], function(){
-        Route::get('list', ['as' => 'admin.catevideo.list', 'uses' => 'CateVideoController@getList']);
-        Route::get('add', ['as' => 'admin.catevideo.getAdd', 'uses' => 'CateVideoController@getAdd']);
-        Route::post('add', ['as' => 'admin.catevideo.postAdd', 'uses' => 'CateVideoController@postAdd']);
-
-        Route::get('delete/{id}', ['as' => 'admin.catevideo.getDelete', 'uses' => 'CateVideoController@getDelete']);
-        Route::get('edit/{id}', ['as' => 'admin.catevideo.getEdit', 'uses' => 'CateVideoController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.catevideo.postEdit', 'uses' => 'CateVideoController@postEdit']);
-    });
-
-    //videos 
-    Route::group(['prefix' => 'videos'], function(){
-        Route::get('list', ['as' => 'admin.videos.list', 'uses' => 'VideoController@getList']);
-        Route::get('add', ['as' => 'admin.videos.getAdd', 'uses' => 'VideoController@getAdd']);
-        Route::post('add', ['as' => 'admin.videos.postAdd', 'uses' => 'VideoController@postAdd']);
-
-        Route::get('delete/{id}', ['as' => 'admin.videos.getDelete', 'uses' => 'VideoController@getDelete']);
-        Route::get('edit/{id}', ['as' => 'admin.videos.getEdit', 'uses' => 'VideoController@getEdit']);
-        Route::post('edit/{id}', ['as' => 'admin.videos.postEdit', 'uses' => 'VideoController@postEdit']);
-    });
+//videos
+Route::group(['prefix' => 'videos'], function(){
+    Route::get('', 'VideoController@index');
+    Route::post('', 'VideoController@create');
+    Route::get('{id}', 'VideoController@show');
+    Route::put('{id}', 'VideoController@update');
+    Route::delete('{id}', 'VideoController@delete');
 });

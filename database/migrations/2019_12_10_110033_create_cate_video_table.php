@@ -16,7 +16,7 @@ class CreateCateVideoTable extends Migration
         Schema::create('catevideo', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('catevi_title');
+            $table->string('title');
             $table->string('desc');
             $table->string('image');
             $table->integer('order')->unsigned();

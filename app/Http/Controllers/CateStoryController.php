@@ -11,38 +11,31 @@ use App\CateStory;
 use File;
 class CateStoryController extends Controller
 {
-	public function getList()
-	{
+	public function index()	{
         try {
-            $catestorys = CateStory::select('id', 'catesto_title','desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
+            $catestorys = CateStory::select('id', 'title','desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
         return response()->json(['status' => 'success', 'data' => $catestorys]);
 	}
 
-    public function getAdd()
-    {
-    	$parent = CateStory::select('id', 'catesto_title')->get()->toArray();
-    	return view('admin.story.add', compact('parent'));
-    }
-    
-    public function postAdd(CateStoryRequest $request){
+    public function create(Request $request ) {
     	$catestory = new CateStory();
-    	$catestory->catesto_title = $request->txtTitleEn;
-    	$catestory->desc = $request->txtDesc;
-    	$catestory->type = $request->Type;
-    	$catestory->order = $request->txtOrder;
+    	$catestory->title = $request->title;
+    	$catestory->desc = $request->desc;
+    	$catestory->type = $request->type;
+    	$catestory->order = $request->order;
 
     	$extension = ['jpg','png','jpeg','end'];
-        if($request->hasFile('imagesStory')){
+        if($request->hasFile('imagesStory')) {
             $file = $request->file('imagesStory');
             $duoi = $file->getClientOriginalExtension();
             foreach ($extension as $key) {
                 # code...
                 if($key == 'end'){
                     return redirect('admin/sotry/add')->with('Warning','Just except .jpg, .png, .jpeg');
-                    
+
                 }
                 else if($duoi == $key){
                     break;
@@ -51,31 +44,20 @@ class CateStoryController extends Controller
             $name = $file->getClientOriginalName();
             $file->move("resources/upload/imagestory/",$name);
             $catestory->image = $name;
-        }
-        else{
+        } else {
             $catestory->image = "";
         }
 
         $catestory->save();
-        return redirect('admin/story/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Add Category']);
+        return response()->json(['status' => 'success', 'data' => $catestory, 'message' => 'Success !! Complete Add Category']);
     }
 
-    public function getDelete($id)
-    {
+    public function show($id) {
     	$catestory = CateStory::find($id);
-    	File::delete('resources/upload/imagestory/'.$catestory->image);
-    	$catestory->delete($id);
-    	return redirect()->route('admin.story.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
+    	return response()->json(['status' => 'success', 'data' => $catestory]);
     }
 
-    public function getEdit($id)
-    {
-    	$catestory = CateStory::findOrFail($id)->toArray();
-    	//$story_image = CateStory::find($id);
-    	return view('admin.story.edit', compact('catestory'));
-    }
-
-    public function postEdit(Request $request, $id)
+    public function update(Request $request, $id)
     {
     	//yêu cầu nhập chỉnh sửa
     	$this->validate($request,[
@@ -85,7 +67,7 @@ class CateStoryController extends Controller
             'txtTitleEn.required'=>'Please enter title category story',
             'Type.required'=>'Please enter type category story',
             ]);
-        
+
     	//cập nhật lại dữ liệu
     	$catestory = CateStory::find($id);
     	$catestory->catesto_title = $request->txtTitleEn;
@@ -110,5 +92,11 @@ class CateStoryController extends Controller
 
     	$catestory->save();
     	return redirect('admin/story/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Edit Category Story']);
+    }
+
+    public function delete($id) {
+    	$catestory = CateStory::find($id);
+    	$story->delete($id);
+    	return redirect()->route('admin.stories.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
     }
 }

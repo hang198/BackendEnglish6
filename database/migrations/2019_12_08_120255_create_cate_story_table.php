@@ -21,7 +21,7 @@ class CreateCateStoryTable extends Migration
         Schema::create('catestory', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('catesto_title');
+            $table->string('title');
             $table->string('desc');
             $table->string('image');
             $table->integer('type')->unsigned();

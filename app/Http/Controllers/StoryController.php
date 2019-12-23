@@ -6,27 +6,24 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoryRequest;
-use App\Stories;
+use App\Story;
 use DB;
 use File;
 
-class StoriesController extends Controller
+class StoryController extends Controller
 {
-    public function getList()
-	{
-		$dataStory = Stories::select('id', 'storytitle', 'catestory_id')->orderBy('id', 'DESC')->get()->toArray();
-		//return view('admin.story.list', compact('data'));
-		return view('admin.stories.list',compact('dataStory'));
-	}
-    public function getAdd()
-    {
-    	//$parent = CateStory::select('id', 'storytitle')->get()->toArray();
-    	$Listcate = DB::table('catestory')->get();
-    	return view('admin.stories.add', compact('Listcate'));
+    public function index() {
+        try {
+            $storys = Story::select('id', 'title', 'catestory_id')->orderBy('id', 'DESC')->get()->toArray();
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        return response()->json(['status' => 'success', 'data' => $storys]);
     }
-    public function postAdd(StoryRequest $request){
-    	$story = new Stories();
-    	$story->storytitle = $request->txtTitleStory;
+
+    public function create(StoryRequest $request) {
+    	$story = new Story();
+    	$story->title = $request->txtTitleStory;
     	$story->content = $request->txtContentStory;
     	$story->catestory_id = $request->id_category;
     	$extension = ['jpg','png','jpeg','end'];
@@ -37,7 +34,7 @@ class StoriesController extends Controller
                 # code...
                 if($key == 'end'){
                     return redirect('admin/stories/add')->with('Warning','Just except .jpg, .png, .jpeg');
-                    
+
                 }
                 else if($duoi == $key){
                     break;
@@ -55,22 +52,13 @@ class StoriesController extends Controller
         return redirect('admin/stories/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Add Story']);
     }
 
-    public function getDelete($id)
-    {
-    	$story = Stories::find($id);
-        File::delete('resources/upload/imagestory/'.$story->image);
-    	$story->delete($id);
-    	return redirect()->route('admin.stories.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
-    }
-    public function getEdit($id)
-    {
-        $data = Stories::findOrFail($id)->toArray();
+    public function show($id) {
+        $data = Story::findOrFail($id)->toArray();
         $Listcate = DB::table('catestory')->get();
         return view('admin.stories.edit', compact('data', 'Listcate'));
     }
 
-    public function postEdit(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //yêu cầu nhập chỉnh sửa
         $this->validate($request,[
             'txtTitleStory'=>'required',
@@ -79,8 +67,8 @@ class StoriesController extends Controller
             ]);
 
         //cập nhật lại dữ liệu
-        $story = Stories::find($id);
-        $story->storytitle = $request->txtTitleStory;
+        $story = Story::find($id);
+        $story->title = $request->txtTitleStory;
         $story->content = $request->txtContentStory;
         $story->catestory_id = $request->id_category;
 
@@ -101,5 +89,12 @@ class StoriesController extends Controller
 
         $story->save();
         return redirect('admin/stories/list')->with(['flash_level'=>'success','flash_message'=>'Success !! Complete Edit Story']);
+    }
+
+    public function delete($id) {
+    	$story = Story::find($id);
+        File::delete('resources/upload/imagestory/'.$story->image);
+    	$story->delete($id);
+    	return redirect()->route('admin.stories.list')->with(['flash_level'=>'success', 'flash_message'=>'success !! Complete Deleted']);
     }
 }
