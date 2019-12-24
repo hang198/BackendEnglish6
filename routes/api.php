@@ -102,6 +102,7 @@ Route::group(['prefix' => 'catestory'], function(){
 Route::group(['prefix' => 'stories'], function(){
     Route::get('', 'StoryController@index');
     Route::post('', 'StoryController@create');
+    Route::get('{catestory_id}/getStories', 'StoryController@getStories');
     Route::get('{id}', 'StoryController@show');
     Route::put('{id}', 'StoryController@update');
     Route::delete('{id}', 'StoryController@delete');
@@ -120,6 +121,7 @@ Route::group(['prefix' => 'catevideo'], function(){
 Route::group(['prefix' => 'videos'], function(){
     Route::get('', 'VideoController@index');
     Route::post('', 'VideoController@create');
+    Route::get('{catevideo_id}/getVideos', 'VideoController@getVideos');
     Route::get('{id}', 'VideoController@show');
     Route::put('{id}', 'VideoController@update');
     Route::delete('{id}', 'VideoController@delete');

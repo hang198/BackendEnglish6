@@ -65,4 +65,10 @@ class StoryController extends Controller
         $story->delete($id);
         return response()->json(['status' => 'success', 'data' => $story, 'message' => 'success !! Complete Deleted']);
     }
+
+    public function getStories($catestory_id)
+    {
+        $stories = Story::find(['catestory_id' => $catestory_id]);
+        return response()->json(['status' => 'success', 'data' => $stories]);
+    }
 }
