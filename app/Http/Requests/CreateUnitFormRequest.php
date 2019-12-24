@@ -23,18 +23,22 @@ class CreateUnitFormRequest extends FormRequest
      */
     public function rules()
     {
-     return [
-         'name' => 'required|unique:units,name',
-         'name_vi' => 'required|unique:units,name'
-     ];
+         return [
+             'name' => 'required|unique:units,name',
+             'name_vi' => 'required|unique:units,name_vi',
+             'order' => 'required|unique:units,order'
+         ];
     }
+
     public function messages()
     {
-        return[
+        return [
             'name.required' => 'Tên danh mục không thể bỏ trống!',
             'name.unique' => 'Tên danh mục này đã tồn tại!',
             'name_vi.required' => 'Tên danh mục không thể bỏ trống!',
-            'name_vi.unique' => 'Tên danh mục này đã tồn tại!'
+            'name_vi.unique' => 'Tên danh mục này đã tồn tại!',
+            'order.required'  => 'Tên số thứ tự không thể bỏ trống!',
+            'order.unique' => 'Tên số thứ tự này đã tồn tại!',
         ];
     }
 }

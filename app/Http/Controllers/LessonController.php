@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateLessonFormRequest;
+use App\Lesson;
 use App\Services\LessonServiceInterface;
 use App\services\UnitServiceInterface;
 use Illuminate\Http\Request;
@@ -79,5 +80,15 @@ class LessonController extends Controller
                 return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
+    }
+
+    public function getPracticesIntoLesson($id) {
+        try {
+            $practices = Lesson::find($id)->practice;
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+        return response()->json(['status' => 'success',
+                                'data' => $practices]);
     }
 }

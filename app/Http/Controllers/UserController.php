@@ -26,7 +26,7 @@ class UserController extends Controller
         $credentials = $request->only(['name', 'password']);
         try {
             if (!$token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'Tài khoản hoặc mật khẩu không chính xác!'], 401);
+                return response()->json(['error' => 'Hãy đảm bảo điền đầy đủ thông tin và kiểm tra Tài khoản hoặc mật khẩu không chính xác!'], 401);
             };
             $user = auth()->user();
             $role = $user->role;

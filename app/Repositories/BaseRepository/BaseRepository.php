@@ -27,8 +27,11 @@ abstract class BaseRepository implements RepositoryInterface
         $this->model->create($data);
     }
 
-    public function getAll()
+    public function getAll($orderBy = null)
     {
+        if ($orderBy) {
+            return $this->model->orderBy($orderBy)->get();
+        }
         return $this->model->all();
     }
 

@@ -38,7 +38,7 @@ class UnitServiceImpl implements UnitServiceInterface
 
     public function getAll()
     {
-        return $this->unitRepo->getAll();
+        return $this->unitRepo->getAll("order");
     }
 
     public function delete($id)

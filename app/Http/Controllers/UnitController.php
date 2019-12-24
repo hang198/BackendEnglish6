@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUnitFormRequest;
 use App\services\UnitServiceInterface;
+use App\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,8 @@ class UnitController extends Controller
             try {
                 $this->unitService->create($request);
             } catch (\Exception $e) {
-                return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+                return response()->json(['status' => 'error',
+                    'message' => $e->getMessage()]);
             }
             return response()->json(['status' => 'success']);
 

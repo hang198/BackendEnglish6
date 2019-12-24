@@ -24,7 +24,7 @@ Route::middleware('jwt.verify')->get('auth/user', 'UserController@getCurrentUser
 
 
 Route::prefix('units')->group(function () {
-        Route::post('create', 'UnitController@create');
+        Route::post('/create', 'UnitController@create');
         Route::delete('{id}/delete', 'UnitController@delete');
         Route::post('{id}/update', 'UnitController@update');
         Route::get('{id}', 'UnitController@getByID');
@@ -38,6 +38,7 @@ Route::prefix('lessons')->group(function () {
     Route::post('{id}/update', 'LessonController@update');
     Route::delete('{id}/delete', 'LessonController@delete');
     Route::get('unit/{id}','LessonController@getByUnitId');
+    Route::get('/{lesson_id}/practices','LessonController@getPracticesIntoLesson');
 });
 
 Route::prefix('questions')->group(function () {
