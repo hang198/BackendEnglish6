@@ -126,3 +126,5 @@ Route::group(['prefix' => 'videos'], function(){
     Route::put('{id}', 'VideoController@update');
     Route::delete('{id}', 'VideoController@delete');
 });
+
+Route::post('/images', 'CateStoryController@uploadImage');

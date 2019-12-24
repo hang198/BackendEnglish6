@@ -25,25 +25,7 @@ class CateStoryController extends Controller
         $catestory->desc = $request->desc;
         $catestory->type = $request->type;
         $catestory->order = $request->order;
-
-        $extension = ['jpg', 'png', 'jpeg', 'end'];
-        if ($request->hasFile('imagesStory')) {
-            $file = $request->file('imagesStory');
-            $duoi = $file->getClientOriginalExtension();
-            foreach ($extension as $key) {
-                # code...
-                if ($key == 'end') {
-                    return redirect('admin/sotry/add')->with('Warning', 'Just except .jpg, .png, .jpeg');
-                } else if ($duoi == $key) {
-                    break;
-                }
-            }
-            $name = $file->getClientOriginalName();
-            $file->move("resources/upload/imagestory/", $name);
-            $catestory->image = $name;
-        } else {
-            $catestory->image = "";
-        }
+        $catestory->image = $request->image;
 
         $catestory->save();
         return response()->json(['status' => 'success', 'data' => $catestory, 'message' => 'Success !! Complete Add Category']);
@@ -72,17 +54,7 @@ class CateStoryController extends Controller
         $catestory->desc = $request->desc;
         $catestory->type = $request->type;
         $catestory->order = $request->order;
-
-        //xử lý hình ảnh
-        $img_current = 'resources/upload/imagestory/' . $request->input('imgCurrent');
-        if (!empty($request->file('imagesStory'))) {
-            $file_name = $request->file('imagesStory')->getClientOriginalName();
-            $catestory->image = $file_name;
-            $request->file('imagesStory')->move('resources/upload/imagestory/', $file_name);
-            if (File::exists($img_current)) {
-                File::delete($img_current);
-            }
-        }
+        $catestory->image = $request->image;
 
         $catestory->save();
         return response()->json(['status' => 'success', 'data' => $catestory, 'message' => 'Success !! Complete Edit Category Story']);
@@ -93,5 +65,14 @@ class CateStoryController extends Controller
         $catestory = CateStory::find($id);
         $catestory->delete($id);
         return response()->json(['status' => 'success', 'data' => $catestory, 'message' => 'success !! Complete Deleted']);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $file_name = $request->file('image')->store('public/images');
+            return response()->json(['status' => 'success', 'data' => basename($file_name), 'message' => 'success !! Complete Uploaded']);
+        }
+        return response()->json(['status' => 'error', 'message' => 'error !! File not valid']);
     }
 }

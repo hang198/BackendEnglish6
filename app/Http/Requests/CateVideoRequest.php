@@ -27,7 +27,7 @@ class CateVideoRequest extends FormRequest
             'title' => 'required|unique:catevideo,title',
             'type' => 'required|unique:catevideo,type',
             'order' => 'required|unique:catevideo,order',
-            'image'   => 'image'
+            'image'   => 'required'
         ];
     }
 
@@ -39,7 +39,7 @@ class CateVideoRequest extends FormRequest
             'type.unique' =>'This type category is exist',
             'order.required' => 'Please enter Order number category story',
             'order.unique' =>'This Order number catestory is exist',
-            'image.image' => 'This file is not image'
+            'image.required' => 'Please choose image'
         ];
     }
 }

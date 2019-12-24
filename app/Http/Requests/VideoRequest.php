@@ -26,7 +26,7 @@ class VideoRequest extends FormRequest
         return [
             'title' => 'required|unique:videos,title',
             'catevideo_id'   => 'required',
-            'image'   => 'image',
+            'image'   => 'required',
             'link'      => 'required|unique:videos,link'
         ];
     }
@@ -38,7 +38,7 @@ class VideoRequest extends FormRequest
             'catevideo_id.required' => 'Please choose category video',
             'link.required' => 'Please enter link video',
             'link.unique' =>'This link video is exist',
-            'image.image' => 'This file is not image'
+            'image.required' => 'Please choose image'
         ];
     }
 }

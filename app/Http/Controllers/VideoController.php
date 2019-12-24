@@ -27,24 +27,8 @@ class VideoController extends Controller
         $video->title = $request->title;
         $video->link = $request->link;
         $video->catevideo_id = $request->catevideo_id;
-        $extension = ['jpg', 'png', 'jpeg', 'end'];
-        if ($request->hasFile('imagesStory')) {
-            $file = $request->file('imagesStory');
-            $duoi = $file->getClientOriginalExtension();
-            foreach ($extension as $key) {
-                # code...
-                if ($key == 'end') {
-                    return redirect('admin/videos/add')->with('Warning', 'Just except .jpg, .png, .jpeg');
-                } else if ($duoi == $key) {
-                    break;
-                }
-            }
-            $name = $file->getClientOriginalName();
-            $file->move('resources/upload/imagevideo/', $name);
-            $video->image = $name;
-        } else {
-            $video->image = "";
-        }
+        $video->image = $request->image;
+
         $video->save();
         return response()->json(['status' => 'success', 'data' => $video, 'message' => 'Success !! Complete Add Video']);
     }
@@ -70,18 +54,7 @@ class VideoController extends Controller
         $video->title = $request->title;
         $video->link = $request->link;
         $video->catevideo_id = $request->catevideo_id;
-
-        //xử lý hình ảnh
-        $img_current = 'resources/upload/imagevideo/' . $request->input('imgCurrent');
-        if (!empty($request->file('imagesStory'))) {
-            //echo "có file";
-            $file_name = $request->file('imagesStory')->getClientOriginalName();
-            $video->image = $file_name;
-            $request->file('imagesStory')->move('resources/upload/imagevideo/', $file_name);
-            if (File::exists($img_current)) {
-                File::delete($img_current);
-            }
-        }
+        $video->image = $request->image;
 
         $video->save();
         return response()->json(['status' => 'success', 'data' => $video, 'message' => 'Success !! Complete Edit Video']);

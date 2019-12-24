@@ -26,25 +26,8 @@ class CateVideoController extends Controller
 		$catevideo->desc = $request->desc;
 		$catevideo->type = $request->type;
 		$catevideo->order = $request->order;
+		$catevideo->image = $request->image;
 
-		$extension = ['jpg', 'png', 'jpeg', 'end'];
-		if ($request->hasFile('imagesStory')) {
-			$file = $request->file('imagesStory');
-			$duoi = $file->getClientOriginalExtension();
-			foreach ($extension as $key) {
-				# code...
-				if ($key == 'end') {
-					return redirect('admin/catevideo/add')->with('Warning', 'Just except .jpg, .png, .jpeg');
-				} else if ($duoi == $key) {
-					break;
-				}
-			}
-			$name = $file->getClientOriginalName();
-			$file->move("resources/upload/imagevideo/", $name);
-			$catevideo->image = $name;
-		} else {
-			$catevideo->image = "";
-		}
 		$catevideo->save();
 		return response()->json(['status' => 'success', 'data' => $catevideo, 'message' => 'Success !! Complete Add Category']);
 	}
@@ -71,18 +54,7 @@ class CateVideoController extends Controller
 		$catevideo->desc = $request->desc;
 		$catevideo->type = $request->type;
 		$catevideo->order = $request->order;
-
-		//xử lý hình ảnh
-		$img_current = 'resources/upload/imagevideo/' . $request->input('imgCurrent');
-		if (!empty($request->file('imagesStory'))) {
-			//echo "có file";
-			$file_name = $request->file('imagesStory')->getClientOriginalName();
-			$catevideo->image = $file_name;
-			$request->file('imagesStory')->move('resources/upload/imagevideo/', $file_name);
-			if (File::exists($img_current)) {
-				File::delete($img_current);
-			}
-		}
+		$catevideo->image = $request->image;
 
 		$catevideo->save();
 		return response()->json(['status' => 'success', 'data' => $catevideo, 'message' => 'Success !! Complete Edit Category Video']);

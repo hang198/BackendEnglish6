@@ -26,7 +26,7 @@ class StoryRequest extends FormRequest
         return [
             'title' => 'required|unique:stories,title',
             'catestory_id'   => 'required',
-            'image'   => 'image'
+            'image'   => 'required'
         ];
     }
 
@@ -35,7 +35,7 @@ class StoryRequest extends FormRequest
             'title.required' => 'Please enter title story',
             'title.unique' =>'This name story is exist',
             'catestory_id.required' => 'Please choose id category story',
-            'image.image' => 'This file is not image'
+            'image.required' => 'Please choose image'
         ];
     }
 }
