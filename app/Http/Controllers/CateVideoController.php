@@ -15,7 +15,7 @@ class CateVideoController extends Controller
 {
 	public function index()
 	{
-		$catevideos = CateVideo::select('id', 'title', 'desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
+		$catevideos = CateVideo::select('id', 'title', 'desc', 'image')->orderBy('id', 'DESC')->get()->toArray();
 		return response()->json(['status' => 'success', 'data' => $catevideos]);
 	}
 

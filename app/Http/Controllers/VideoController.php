@@ -66,4 +66,10 @@ class VideoController extends Controller
         $video->delete($id);
         return response()->json(['status' => 'success', 'data' => $video, 'message' => 'success !! Complete Deleted']);
     }
+
+    public function getVideos($catevideo_id)
+    {
+        $videos = Video::find(['catevideo_id' => $catevideo_id]);
+        return response()->json(['status' => 'success', 'data' => $videos]);
+    }
 }

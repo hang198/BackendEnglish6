@@ -14,7 +14,7 @@ class CateStoryController extends Controller
 {
     public function index()
     {
-        $catestorys = CateStory::select('id', 'title', 'desc', 'type', 'order')->orderBy('id', 'DESC')->get()->toArray();
+        $catestorys = CateStory::select('id', 'title', 'desc', 'image')->orderBy('id', 'DESC')->get()->toArray();
         return response()->json(['status' => 'success', 'data' => $catestorys]);
     }
 
