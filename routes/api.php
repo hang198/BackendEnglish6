@@ -88,3 +88,41 @@ Route::prefix('roles')->group(function (){
     Route::get('/', 'RoleController@getAll');
 });
 
+
+//danh muc truyen
+Route::group(['prefix' => 'catestory'], function(){
+    Route::get('', 'CateStoryController@index');
+    Route::post('', 'CateStoryController@create');
+    Route::get('{id}', 'CateStoryController@show');
+    Route::put('{id}', 'CateStoryController@update');
+    Route::delete('{id}', 'CateStoryController@delete');
+});
+
+//truyen chi tiet
+Route::group(['prefix' => 'stories'], function(){
+    Route::get('', 'StoryController@index');
+    Route::post('', 'StoryController@create');
+    Route::get('{id}', 'StoryController@show');
+    Route::put('{id}', 'StoryController@update');
+    Route::delete('{id}', 'StoryController@delete');
+});
+
+//danh muc video
+Route::group(['prefix' => 'catevideo'], function(){
+    Route::get('', 'CateVideoController@index');
+    Route::post('', 'CateVideoController@create');
+    Route::get('{id}', 'CateVideoController@show');
+    Route::put('{id}', 'CateVideoController@update');
+    Route::delete('{id}', 'CateVideoController@delete');
+});
+
+//videos
+Route::group(['prefix' => 'videos'], function(){
+    Route::get('', 'VideoController@index');
+    Route::post('', 'VideoController@create');
+    Route::get('{id}', 'VideoController@show');
+    Route::put('{id}', 'VideoController@update');
+    Route::delete('{id}', 'VideoController@delete');
+});
+
+Route::post('/images', 'CateStoryController@uploadImage');
