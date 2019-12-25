@@ -26,13 +26,13 @@ class VideoTableSeeder extends Seeder
         $video = new \App\Video();
         $video->title = 'Baby Birds Grow Up';
         $video->link = 'https://www.youtube.com/embed/MgEU1DP7tIw';
-        $video->image = 'bird.jpg';
+        $video->image = 'amnhac.jpg';
         $video->catevideo_id = '3';
         $video->save();
         $video = new \App\Video();
         $video->title = 'The debate';
         $video->link = 'https://www.youtube.com/embed/ZgnxS-n4wY4';
-        $video->image = 'debate.jpg';
+        $video->image = 'heaven.jpg';
         $video->catevideo_id = '4';
         $video->save();
     }

@@ -36,7 +36,7 @@ class CateStoryTableSeeder extends Seeder
         $catestory = new \App\CateStory();
         $catestory->title = 'Góc truyện ngắn';
         $catestory->desc = 'Tuyển tập những truyện ngắn hay nhất mọi thời đại';
-        $catestory->image = '';
+        $catestory->image = 'truyenngan.jpg';
         $catestory->type = '4';
         $catestory->order = '4';
         $catestory->save();
