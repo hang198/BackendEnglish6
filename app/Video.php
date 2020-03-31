@@ -8,7 +8,7 @@ class Video extends Model
 {
     protected $table = 'videos';
 
-    protected $fillable = ['title', 'image', 'link', 'catevideo_id'];
+    protected $fillable = ['title', 'image', 'link','desc', 'catevideo_id'];
 
     public $timestamps = false;
 

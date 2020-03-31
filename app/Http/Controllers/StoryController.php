@@ -68,7 +68,7 @@ class StoryController extends Controller
 
     public function getStories($catestory_id)
     {
-        $stories = Story::find(['catestory_id' => $catestory_id]);
+        $stories = Story::where('catestory_id', $catestory_id)->get();
         return response()->json(['status' => 'success', 'data' => $stories]);
     }
 }

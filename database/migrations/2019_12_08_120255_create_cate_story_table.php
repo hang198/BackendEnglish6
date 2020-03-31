@@ -24,7 +24,6 @@ class CreateCateStoryTable extends Migration
             $table->string('title');
             $table->string('desc');
             $table->string('image');
-            $table->integer('type')->unsigned();
             $table->integer('order')->unsigned();
             $table->timestamps();
         });

@@ -25,7 +25,6 @@ class CateVideoRequest extends FormRequest
     {
         return [
             'title' => 'required|unique:catevideo,title',
-            'type' => 'required|unique:catevideo,type',
             'order' => 'required|unique:catevideo,order',
             'image'   => 'required'
         ];
@@ -35,8 +34,6 @@ class CateVideoRequest extends FormRequest
         return [
             'title.required' => 'Please enter title category video',
             'title.unique' =>'This name category video is exist',
-            'type.required' => 'Please enter type category video',
-            'type.unique' =>'This type category is exist',
             'order.required' => 'Please enter Order number category story',
             'order.unique' =>'This Order number catestory is exist',
             'image.required' => 'Please choose image'

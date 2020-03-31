@@ -26,6 +26,7 @@ class VideoController extends Controller
         $video = new Video();
         $video->title = $request->title;
         $video->link = $request->link;
+        $video->desc = $request->desc;
         $video->catevideo_id = $request->catevideo_id;
         $video->image = $request->image;
 
@@ -53,6 +54,7 @@ class VideoController extends Controller
         $video = Video::find($id);
         $video->title = $request->title;
         $video->link = $request->link;
+        $video->desc = $request->desc;
         $video->catevideo_id = $request->catevideo_id;
         $video->image = $request->image;
 
@@ -69,7 +71,7 @@ class VideoController extends Controller
 
     public function getVideos($catevideo_id)
     {
-        $videos = Video::find(['catevideo_id' => $catevideo_id]);
+        $videos = Video::where(['catevideo_id' => $catevideo_id])->get();
         return response()->json(['status' => 'success', 'data' => $videos]);
     }
 }

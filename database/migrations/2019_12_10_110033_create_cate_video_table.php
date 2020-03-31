@@ -20,7 +20,6 @@ class CreateCateVideoTable extends Migration
             $table->string('desc');
             $table->string('image');
             $table->integer('order')->unsigned();
-            $table->integer('type')->unsigned();
             $table->timestamps();
         });
     }

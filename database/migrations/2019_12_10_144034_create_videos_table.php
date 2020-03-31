@@ -18,6 +18,7 @@ class CreateVideosTable extends Migration
             $table->string('title');
             $table->string('image');
             $table->string('link');
+            $table->string('desc')->nullable();
             $table->unsignedInteger('catevideo_id');
             $table->foreign('catevideo_id')->references('id')->on('catevideo')->onDelete('cascade');
             $table->timestamps();

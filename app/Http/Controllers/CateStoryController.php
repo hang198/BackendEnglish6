@@ -23,7 +23,6 @@ class CateStoryController extends Controller
         $catestory = new CateStory();
         $catestory->title = $request->title;
         $catestory->desc = $request->desc;
-        $catestory->type = $request->type;
         $catestory->order = $request->order;
         $catestory->image = $request->image;
 
@@ -42,17 +41,14 @@ class CateStoryController extends Controller
         //yêu cầu nhập chỉnh sửa
         $this->validate($request, [
             'title' => 'required',
-            'type' => 'required',
         ], [
             'title.required' => 'Please enter title category story',
-            'type.required' => 'Please enter type category story',
         ]);
 
         //cập nhật lại dữ liệu
         $catestory = CateStory::find($id);
         $catestory->title = $request->title;
         $catestory->desc = $request->desc;
-        $catestory->type = $request->type;
         $catestory->order = $request->order;
         $catestory->image = $request->image;
 

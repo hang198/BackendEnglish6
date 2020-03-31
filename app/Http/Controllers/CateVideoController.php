@@ -24,7 +24,6 @@ class CateVideoController extends Controller
 		$catevideo = new CateVideo();
 		$catevideo->title = $request->title;
 		$catevideo->desc = $request->desc;
-		$catevideo->type = $request->type;
 		$catevideo->order = $request->order;
 		$catevideo->image = $request->image;
 
@@ -43,16 +42,13 @@ class CateVideoController extends Controller
 		//yêu cầu nhập chỉnh sửa
 		$this->validate($request, [
 			'title' => 'required',
-			'type' => 'required',
 		], [
 			'title.required' => 'Please enter title category video',
-			'type.required' => 'Please enter type category video',
 		]);
 		//cập nhật lại dữ liệu
 		$catevideo = CateVideo::find($id);
 		$catevideo->title = $request->title;
 		$catevideo->desc = $request->desc;
-		$catevideo->type = $request->type;
 		$catevideo->order = $request->order;
 		$catevideo->image = $request->image;
 

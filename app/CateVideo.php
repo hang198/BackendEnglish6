@@ -8,7 +8,7 @@ class CateVideo extends Model
 {
     protected $table = 'catevideo';
 
-    protected $fillable = ['title', 'desc', 'image', 'type', 'order'];
+    protected $fillable = ['title', 'desc', 'image', 'order'];
 
     public $timestamps = false;
 

@@ -8,7 +8,7 @@ class CateStory extends Model
 {
     protected $table = 'catestory';
 
-    protected $fillable = ['title', 'desc', 'image', 'order', 'type'];
+    protected $fillable = ['title', 'desc', 'image', 'order'];
 
     public $timestamps = false;
 
